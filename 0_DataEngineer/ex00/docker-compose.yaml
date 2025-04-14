@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   db:
     image: postgres:15
@@ -15,5 +13,12 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    networks:
+      - piscineds-network
+
 volumes:
   pgdata:
+
+networks:
+  piscineds-network:
+    driver: bridge

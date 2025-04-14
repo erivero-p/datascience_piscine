@@ -35,3 +35,6 @@ services:
 volumes:
   pgdata:
 
+networks:
+  piscineds-network:
+    driver: bridge
