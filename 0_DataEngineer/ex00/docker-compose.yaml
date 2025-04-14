@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    restart: always
+    container_name: piscineds-db
+    # By setting up these environment variables, the Postgres image will automatically create
+    # the database and user the first time you build the container 
+    environment:
+      POSTGRES_USER: erivero-
+      POSTGRES_DB: piscineds
+      POSTGRES_PASSWORD: mysecretpassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
