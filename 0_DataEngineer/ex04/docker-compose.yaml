@@ -1,0 +1,20 @@
+services:
+  db:
+    build: .
+    container_name: piscineds-db
+    environment:
+      POSTGRES_USER: erivero-
+      POSTGRES_DB: piscineds
+      POSTGRES_PASSWORD: mysecretpassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ../csv_data:/csv_data
+
+volumes:
+  pgdata:
+
+networks:
+  piscineds-network:
+    driver: bridge
