@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-TABLE_NAME="event_data"
+TABLE_NAME="data_2022_oct"
 CSV_PATH="/csv_data/customer/data_2022_oct.csv"
 
 # Function to check if table already exists
