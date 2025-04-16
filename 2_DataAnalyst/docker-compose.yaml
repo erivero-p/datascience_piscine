@@ -1,0 +1,48 @@
+services:
+  db:
+    build: ./builder/db
+    container_name: piscineds-db
+    environment:
+      POSTGRES_USER: erivero-p
+      POSTGRES_DB: piscineds
+      POSTGRES_PASSWORD: mysecretpassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./csv_data:/csv_data
+    networks:
+      - piscineds-network
+  # pgadmin:
+  #   image: dpage/pgadmin4:latest
+  #   container_name: pgadmin
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
+  #     PGADMIN_DEFAULT_PASSWORD: "pgadminpassword"
+  #   ports:
+  #     - "5050:80"
+  #   depends_on:
+  #     - db
+  #   networks:
+  #     - piscineds-network
+  chart:
+    build: ./builder/chart
+    container_name: chart
+    depends_on:
+      - db
+    volumes:
+      - ./scripts:/app/scripts
+    networks:
+      - piscineds-network
+    environment:
+      - DB_HOST=db
+      - DB_NAME=piscineds
+      - DB_USER=erivero-p
+      - DB_PASS=mysecretpassword
+
+volumes:
+  pgdata:
+
+networks:
+  piscineds-network:
+    driver: bridge
