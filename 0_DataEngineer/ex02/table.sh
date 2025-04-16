@@ -2,7 +2,7 @@
 set -e
 
 TABLE_NAME="data_2022_oct"
-CSV_PATH="/subject/customer/data_2022_oct.csv"
+CSV_PATH="/csv_data/customer/data_2022_oct.csv"
 
 # Function to check if table already exists
 function table_exists() {

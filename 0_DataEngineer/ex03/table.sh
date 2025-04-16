@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-CSV_DIR="/subject/customer"
+CSV_DIR="/csv_data/customer"
 
 # Function to check if a table already exists
 function table_exists() {
