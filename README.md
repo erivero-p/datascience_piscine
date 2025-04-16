@@ -1,6 +1,6 @@
 ## 🛠️ Data Science Piscine – 42
 
-This repo contains my solutions for the **Data Engineering Pool** at 42.
+This repo contains my solutions for the **42 Data Science Piscine**.
 
 Each folder represents a project with its own steps and scripts to clean, prepare, and process data using **PostgreSQL** and **bash scripting**.
 I’m not uploading the csv files for security (and storage) reasons, so please, make sure to place them in the correct route (X_ProjectDir/csv_files/). 
