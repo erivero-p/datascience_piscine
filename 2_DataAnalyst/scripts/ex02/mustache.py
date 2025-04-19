@@ -82,10 +82,10 @@ GROUP BY user_id;
 """
 df_avg_basket = pd.read_sql(query_avg_basket, conn)
 
-# Usamos todos los datos
+# Use all the data
 avg_cart_prices = df_avg_basket['avg_basket_price'].tolist()
 
-# Calcular Q1 y Q3 para determinar el rango ajustado
+# Calculate Q1 and Q3 to determine the adjusted range
 q1 = df_avg_basket['avg_basket_price'].quantile(0.25)
 q3 = df_avg_basket['avg_basket_price'].quantile(0.75)
 iqr = q3 - q1
@@ -108,17 +108,17 @@ plt.boxplot(
 plt.title("Box Plot of Average Basket Price per User")
 plt.xlabel("Average Basket Price")
 
-# Ajustar los ticks del eje x
-plt.gca().xaxis.set_major_locator(ticker.MultipleLocator(2))  # Incrementos de 2 en el eje x
-plt.gca().xaxis.set_minor_locator(ticker.MultipleLocator(1))  # Incrementos menores de 1 en el eje x
+# Adjust the x-axis ticks
+plt.gca().xaxis.set_major_locator(ticker.MultipleLocator(2))  # Increments of 2 on the x-axis
+plt.gca().xaxis.set_minor_locator(ticker.MultipleLocator(1))  # Minor increments of 1 on the x-axis
 
-# Ajustar los límites del eje x para incluir los outliers
-plt.xlim(lower_bound - 2, upper_bound + 2)  # Extiende ligeramente más allá del rango ajustado
+# Adjust the x-axis limits to include the outliers
+plt.xlim(lower_bound - 2, upper_bound + 2)  # Extend slightly beyond the adjusted range
 
-# Eliminar los ticks del eje y (opcional, ya que es un box plot horizontal)
+# Remove the y-axis ticks (optional, since it's a horizontal box plot)
 plt.yticks([])
 
-# Guardar la imagen
+# Save the image
 plt.tight_layout()
 plt.savefig("./scripts/ex02/boxplot_avg_basket_price_with_outliers.png")
 plt.close()
