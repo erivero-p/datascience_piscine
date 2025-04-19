@@ -2,6 +2,7 @@ import os
 import psycopg2
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 import numpy as np
 
 # Database Connection
@@ -43,7 +44,7 @@ for col, val in zip(columns, result):
 query_prices = """
 SELECT price
 FROM customers
-WHERE event_type = 'purchase' AND price > 0;
+WHERE event_type = 'purchase';
 """
 df_prices = pd.read_sql(query_prices, conn)
 
@@ -76,38 +77,52 @@ plt.close()
 query_avg_basket = """
 SELECT user_id, AVG(price) AS avg_basket_price
 FROM customers
-WHERE event_type = 'purchase' AND price > 0
+WHERE event_type = 'purchase'
 GROUP BY user_id;
 """
 df_avg_basket = pd.read_sql(query_avg_basket, conn)
 
-# Create the third box plot (average basket price with outliers)
-plt.figure(figsize=(8, 6))
-plt.boxplot(df_avg_basket['avg_basket_price'], vert=False, patch_artist=True, boxprops=dict(facecolor="lightblue"))
-plt.title("Box Plot of Average Basket Price per User (With Outliers)")
+# Usamos todos los datos
+avg_cart_prices = df_avg_basket['avg_basket_price'].tolist()
+
+# Calcular Q1 y Q3 para determinar el rango ajustado
+q1 = df_avg_basket['avg_basket_price'].quantile(0.25)
+q3 = df_avg_basket['avg_basket_price'].quantile(0.75)
+iqr = q3 - q1
+lower_bound = q1 - 1.5 * iqr
+upper_bound = q3 + 1.5 * iqr
+
+# Create the box plot for average basket price per user
+plt.figure(figsize=(10, 4))
+plt.boxplot(
+    avg_cart_prices,
+    vert=False,
+    widths=0.6,
+    notch=True,
+    boxprops=dict(facecolor='lightblue', edgecolor='black'),
+    flierprops=dict(marker='o', markersize=3, markerfacecolor='red', markeredgecolor='black') ,
+    patch_artist=True,
+    whis=1.5  # Whiskers extend to 1.5 * IQR
+)
+
+plt.title("Box Plot of Average Basket Price per User")
 plt.xlabel("Average Basket Price")
+
+# Ajustar los ticks del eje x
+plt.gca().xaxis.set_major_locator(ticker.MultipleLocator(2))  # Incrementos de 2 en el eje x
+plt.gca().xaxis.set_minor_locator(ticker.MultipleLocator(1))  # Incrementos menores de 1 en el eje x
+
+# Ajustar los límites del eje x para incluir los outliers
+plt.xlim(lower_bound - 2, upper_bound + 2)  # Extiende ligeramente más allá del rango ajustado
+
+# Eliminar los ticks del eje y (opcional, ya que es un box plot horizontal)
+plt.yticks([])
+
+# Guardar la imagen
+plt.tight_layout()
 plt.savefig("./scripts/ex02/boxplot_avg_basket_price_with_outliers.png")
 plt.close()
 
-# Create the fourth box plot (average basket price without extreme outliers)
-# Define a reasonable range (e.g., within 1.5 * IQR)
-q1_avg = df_avg_basket['avg_basket_price'].quantile(0.25)
-q3_avg = df_avg_basket['avg_basket_price'].quantile(0.75)
-iqr_avg = q3_avg - q1_avg
-lower_bound_avg = q1_avg - 1.5 * iqr_avg
-upper_bound_avg = q3_avg + 1.5 * iqr_avg
-
-filtered_avg_basket = df_avg_basket[
-    (df_avg_basket['avg_basket_price'] >= lower_bound_avg) &
-    (df_avg_basket['avg_basket_price'] <= upper_bound_avg)
-]
-
-plt.figure(figsize=(8, 6))
-plt.boxplot(filtered_avg_basket['avg_basket_price'], vert=False, patch_artist=True, boxprops=dict(facecolor="lightblue"))
-plt.title("Box Plot of Average Basket Price per User (Without Extreme Outliers)")
-plt.xlabel("Average Basket Price")
-plt.savefig("./scripts/ex02/boxplot_avg_basket_price_without_outliers.png")
-plt.close()
 
 # Close connection
 cur.close()
