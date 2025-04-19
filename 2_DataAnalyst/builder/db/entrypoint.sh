@@ -14,6 +14,7 @@ done
 echo "Creating table and loading data..."
 ./create_table.sh
 ./remove_duplicates.sh
+# ./items_table.sh
 
 # Keep the container running
 wait -n

@@ -1,4 +1,3 @@
-# ex00/pie.py
 import os
 import psycopg2
 import matplotlib.pyplot as plt
@@ -34,5 +33,5 @@ plt.pie(counts, labels=event_types, autopct='%1.1f%%', startangle=140)
 plt.title('Distribution of Events on the Site')
 plt.axis('equal')
 plt.show()
-plt.savefig("./chart.png")
+plt.savefig("./scripts/ex00/chart.png")
 print("✅ Pie chart saved as chart.png")
