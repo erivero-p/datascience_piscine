@@ -52,7 +52,7 @@ df_prices = pd.read_sql(query_prices, conn)
 plt.figure(figsize=(8, 6))
 plt.boxplot(df_prices['price'], vert=False, patch_artist=True, boxprops=dict(facecolor="lightgreen"))
 plt.title("Box Plot of Prices (with outliers)")
-plt.xlabel("Price")
+plt.xlabel("price")
 plt.savefig("./scripts/ex02/boxplot_with_outliers.png")
 plt.close()
 
@@ -69,7 +69,7 @@ filtered_prices = df_prices[(df_prices['price'] >= lower_bound) & (df_prices['pr
 plt.figure(figsize=(8, 6))
 plt.boxplot(filtered_prices['price'], vert=False, patch_artist=True, boxprops=dict(facecolor="lightgreen"))
 plt.title("Box Plot of Prices (without extreme outliers)")
-plt.xlabel("Price")
+plt.xlabel("price")
 plt.savefig("./scripts/ex02/boxplot_without_outliers.png")
 plt.close()
 
@@ -106,7 +106,7 @@ plt.boxplot(
 )
 
 plt.title("Box Plot of Average Basket Price per User")
-plt.xlabel("Average Basket Price")
+plt.xlabel("average basket price")
 
 # Adjust the x-axis ticks
 plt.gca().xaxis.set_major_locator(ticker.MultipleLocator(2))  # Increments of 2 on the x-axis
