@@ -80,8 +80,6 @@ In this module, we focus on generating visual insights from our PostgreSQL wareh
 All scripts are designed to run inside the existing Docker environment. You can execute them manually from the container:
 
 ```bash
-bash
-CopiarEditar
 docker exec -it <container_name> python3 scripts/module2/<script_name>.py
 
 ```
