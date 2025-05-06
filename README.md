@@ -77,13 +77,7 @@ In this module, we focus on generating visual insights from our PostgreSQL wareh
 
 ### ▶️ How to run
 
-All scripts are designed to run inside the existing Docker environment. You can execute them manually from the container:
-
-```bash
-docker exec -it <container_name> python3 scripts/module2/<script_name>.py
-
-```
-
-Each script saves its output chart(s) in `scripts/module2/`. Make sure your database is populated before running them.
+All scripts are designed to run inside the existing Docker environment. You can execute them manually from the container.
+Each script saves its output chart(s) in it's exercise's directory. Make sure your database is populated before running them.
 
 ---
