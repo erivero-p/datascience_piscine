@@ -11,6 +11,7 @@ I’m not uploading the csv files for security (and storage) reasons, so please,
 
 - [Module 0 – Data Engineer](#Module-0---data-engineer)
 - [Module 1 – Data Warehouse](#Module-1---data-warehouse)
+- [Module 2 – Data Analyst](#Module-1---data-analyst)
 
 ---
 
@@ -55,3 +56,36 @@ In this module, we clean and combine raw CSV data to build a small warehouse usi
 
 You can use the provided Docker Compose to run Postgres and pgAdmin.
 As in this module each exercise is one step further than the previous one, this time, I made a common docker-compose so you can run each script manually.
+
+---
+
+### Module 2 – Data Analyst
+
+In this module, we focus on generating visual insights from our PostgreSQL warehouse. Using Python (pandas, matplotlib), we query data and produce different types of business-oriented charts to better understand customer behavior.
+
+### 🚀 What’s included
+
+- **ex00:** Generates a pie chart showing the distribution of purchases by event type.
+- **ex01**
+    - Line chart: Number of customers per day.
+    - Bar chart: Total monthly sales (in ₳ million).
+    - Area chart: Average amount spent per customer per day.
+- **ex02**:
+    - Prints the global average ticket per purchase.
+    - Creates 3 boxplots comparing customer spending by product category, by month, etc.
+- **ex03**: Applies the Elbow Method to determine the optimal number of customer clusters using KMeans, to support targeted email marketing.
+
+### ▶️ How to run
+
+All scripts are designed to run inside the existing Docker environment. You can execute them manually from the container:
+
+```bash
+bash
+CopiarEditar
+docker exec -it <container_name> python3 scripts/module2/<script_name>.py
+
+```
+
+Each script saves its output chart(s) in `scripts/module2/`. Make sure your database is populated before running them.
+
+---
